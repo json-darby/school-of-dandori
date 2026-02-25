@@ -46,7 +46,7 @@ export default function ChatWidget() {
     setInput('');
     
     try {
-      const response = await fetch('https://school-of-dandori-980659832082.europe-west2.run.app/', {
+      const response = await fetch('https://school-of-dandori-980659832082.europe-west2.run.app/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userInput })

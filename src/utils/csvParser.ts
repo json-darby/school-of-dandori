@@ -1,7 +1,7 @@
 import { Course } from '../types';
 
 export const getCourses = (): Promise<Course[]> => {
-  return fetch('https://school-of-dandori-980659832082.europe-west2.run.app/')
+  return fetch('https://school-of-dandori-980659832082.europe-west2.run.app/courses')
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to fetch courses');
