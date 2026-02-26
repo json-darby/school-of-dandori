@@ -290,7 +290,7 @@ export default function Home() {
                           transition={{ duration: 0.3 }}
                           onClick={() => setSelectedCourse(course)}
                           className="relative cursor-pointer group"
-                          style={{ aspectRatio: tileShape === 'acorn' ? '0.75/1' : '0.75/1' }}
+                          style={{ aspectRatio: tileShape === 'acorn' ? '0.95/1' : '0.95/1' }}
                         >
                           {tileShape === 'acorn' ? (
                             /* ACORN SHAPE */
