@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import type { FormEvent } from 'react';
 import { MessageCircle, X, Send, Trash2, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -36,7 +37,7 @@ export default function ChatWidget() {
       .replace(/\n/g, '<br/>');
   };
 
-  const handleSend = async (e?: React.FormEvent) => {
+  const handleSend = async (e?: FormEvent) => {
     e?.preventDefault();
     if (!input.trim()) return;
     

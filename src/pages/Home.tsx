@@ -20,6 +20,7 @@ export default function Home() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [bookingClicked, setBookingClicked] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+  const [tileShape, setTileShape] = useState<'acorn' | 'leaf'>('acorn');
   
   const [filters, setFilters] = useState({
     location: '',
@@ -266,6 +267,15 @@ export default function Home() {
                     <span className="text-dandori-dark/60 font-medium">
                       Showing {displayedCourses.length} of {courses.length} courses
                     </span>
+                    
+                    {/* Shape Toggle Button - Emoji Only */}
+                    <button
+                      onClick={() => setTileShape(prev => prev === 'acorn' ? 'leaf' : 'acorn')}
+                      className="w-12 h-12 bg-white border-2 border-dandori-dark/10 rounded-full hover:border-dandori-light hover:bg-dandori-light/5 hover:scale-110 transition-all shadow-sm flex items-center justify-center"
+                      title={tileShape === 'acorn' ? 'Switch to Leaf View' : 'Switch to Acorn View'}
+                    >
+                      <span className="text-2xl">{tileShape === 'acorn' ? '🍂' : '🌰'}</span>
+                    </button>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -279,58 +289,240 @@ export default function Home() {
                           exit={{ opacity: 0, scale: 0.9 }}
                           transition={{ duration: 0.3 }}
                           onClick={() => setSelectedCourse(course)}
-                          className="bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col group border border-dandori-dark/5 cursor-pointer"
+                          className="relative cursor-pointer group"
+                          style={{ aspectRatio: tileShape === 'acorn' ? '0.75/1' : '0.75/1' }}
                         >
-                          <div className="h-2 bg-dandori-light" />
-                          
-                          <div className="p-6 flex-grow flex flex-col">
-                            <div className="flex justify-between items-start mb-4">
-                              <span className="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-dandori-white text-dandori-dark border border-dandori-dark/10">
-                                {course['Course Type']}
-                              </span>
-                              <span className="font-mono text-lg font-bold text-dandori-yellow">
-                                {course.Cost}
-                              </span>
-                            </div>
+                          {tileShape === 'acorn' ? (
+                            /* ACORN SHAPE */
+                            <>
+                              <svg
+                                viewBox="0 0 300 400"
+                                className="w-full h-full drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300"
+                              >
+                                <defs>
+                                  <linearGradient id={`acornGradient-${course.ID}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stopColor="#d4a574" />
+                                    <stop offset="30%" stopColor="#c49a6a" />
+                                    <stop offset="70%" stopColor="#b8956a" />
+                                    <stop offset="100%" stopColor="#a8865a" />
+                                  </linearGradient>
+                                  <pattern id={`capPattern-${course.ID}`} x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+                                    <circle cx="6" cy="6" r="2.5" fill="#5a4a3a" opacity="0.5" />
+                                  </pattern>
+                                  <pattern id={`woodGrain-${course.ID}`} x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                                    <path d="M0,20 Q25,18 50,20 T100,20" stroke="rgba(90,70,50,0.1)" strokeWidth="1.5" fill="none" />
+                                    <path d="M0,40 Q25,38 50,40 T100,40" stroke="rgba(90,70,50,0.1)" strokeWidth="1.5" fill="none" />
+                                    <path d="M0,60 Q25,58 50,60 T100,60" stroke="rgba(90,70,50,0.1)" strokeWidth="1.5" fill="none" />
+                                    <path d="M0,80 Q25,78 50,80 T100,80" stroke="rgba(90,70,50,0.1)" strokeWidth="1.5" fill="none" />
+                                  </pattern>
+                                  <radialGradient id={`capGradient-${course.ID}`}>
+                                    <stop offset="0%" stopColor="#7a6347" />
+                                    <stop offset="100%" stopColor="#5a4a3a" />
+                                  </radialGradient>
+                                </defs>
+                                
+                                {/* Stem */}
+                                <rect x="145" y="40" width="10" height="25" rx="4" fill="#4a3a2a" />
+                                
+                                {/* Acorn Cap - more textured and rounded */}
+                                <ellipse cx="150" cy="85" rx="95" ry="45" fill={`url(#capGradient-${course.ID})`} stroke="#4a3a2a" strokeWidth="2.5" />
+                                <ellipse cx="150" cy="85" rx="95" ry="45" fill={`url(#capPattern-${course.ID})`} />
+                                
+                                {/* Cap rim with shadow */}
+                                <ellipse cx="150" cy="110" rx="100" ry="22" fill="#6a5a4a" stroke="#4a3a2a" strokeWidth="2" />
+                                <ellipse cx="150" cy="108" rx="100" ry="8" fill="rgba(0,0,0,0.15)" />
 
-                            <h2 className="text-xl font-serif font-bold text-dandori-dark mb-2 group-hover:text-dandori-light transition-colors">
-                              {course['Course Name']}
-                            </h2>
+                                {/* Acorn Body - more rounded and bulbous */}
+                                <path
+                                  d="M 50 110 
+                                     Q 45 160, 50 210
+                                     Q 55 260, 80 300
+                                     Q 110 340, 150 355
+                                     Q 190 340, 220 300
+                                     Q 245 260, 250 210
+                                     Q 255 160, 250 110
+                                     Z"
+                                  fill={`url(#acornGradient-${course.ID})`}
+                                  stroke="#9d7f5a"
+                                  strokeWidth="2.5"
+                                />
+                                
+                                {/* Wood grain overlay */}
+                                <path
+                                  d="M 50 110 
+                                     Q 45 160, 50 210
+                                     Q 55 260, 80 300
+                                     Q 110 340, 150 355
+                                     Q 190 340, 220 300
+                                     Q 245 260, 250 210
+                                     Q 255 160, 250 110
+                                     Z"
+                                  fill={`url(#woodGrain-${course.ID})`}
+                                />
 
-                            <div className="flex items-center text-dandori-dark/60 text-xs mb-4">
-                              <User className="w-3 h-3 mr-1" />
-                              <span className="font-medium">{course.Instructor}</span>
-                            </div>
-
-                            {/* Tags Section */}
-                            <div className="flex flex-wrap gap-2 mb-4">
-                              {course['Skills Developed'].split(',').slice(0, 3).map((skill, i) => (
-                                <span key={i} className="text-[10px] px-2 py-0.5 bg-stone-100 text-stone-600 rounded-full">
-                                  {skill.trim()}
-                                </span>
-                              ))}
-                              {course['Skills Developed'].split(',').length > 3 && (
-                                 <span className="text-[10px] px-2 py-0.5 bg-stone-50 text-stone-400 rounded-full">
-                                   +{course['Skills Developed'].split(',').length - 3} more
-                                 </span>
-                              )}
-                            </div>
-
-                            <p className="text-dandori-dark/70 mb-6 text-sm line-clamp-3 leading-relaxed">
-                              {course.Description}
-                            </p>
-
-                            <div className="mt-auto pt-4 border-t border-dandori-dark/5 flex items-center justify-between">
-                              <div className="flex items-center text-dandori-dark/50 text-xs">
-                                <MapPin className="w-3 h-3 mr-1" />
-                                {course.Location}
+                                {/* Highlight on body */}
+                                <ellipse cx="110" cy="200" rx="35" ry="70" fill="white" opacity="0.12" />
+                              </svg>
+                              <div className="absolute inset-0 flex flex-col justify-between p-5 pt-14 pb-4">
+                                <div>
+                                  <div className="flex justify-between items-start mb-2.5">
+                                    <span className="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/95 text-dandori-dark shadow-sm border border-dandori-dark/10">
+                                      {course['Course Type']}
+                                    </span>
+                                    <span className="font-mono text-xl font-bold text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)]">
+                                      {course.Cost}
+                                    </span>
+                                  </div>
+                                  <h2 className="text-xl font-serif font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] mb-2 leading-tight group-hover:scale-105 transition-transform">
+                                    {course['Course Name']}
+                                  </h2>
+                                  <div className="flex items-center text-white/95 text-sm mb-2.5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
+                                    <User className="w-4 h-4 mr-1.5" />
+                                    <span className="font-medium">{course.Instructor}</span>
+                                  </div>
+                                  <div className="flex flex-wrap gap-2 mb-2.5">
+                                    {course['Skills Developed'].split(',').slice(0, 2).map((skill, i) => (
+                                      <span key={i} className="text-[10px] px-2.5 py-1 bg-white/95 text-dandori-dark rounded-full font-medium shadow-sm">
+                                        {skill.trim()}
+                                      </span>
+                                    ))}
+                                    {course['Skills Developed'].split(',').length > 2 && (
+                                      <span className="text-[10px] px-2.5 py-1 bg-white/75 text-dandori-dark rounded-full font-medium">
+                                        +{course['Skills Developed'].split(',').length - 2}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-white/90 text-sm line-clamp-5 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
+                                    {course.Description}
+                                  </p>
+                                </div>
+                                <div className="space-y-2.5 mt-3">
+                                  <div className="flex items-center text-white/90 text-sm drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
+                                    <MapPin className="w-4 h-4 mr-1.5" />
+                                    {course.Location}
+                                  </div>
+                                  <button className="w-full py-3 bg-white/95 backdrop-blur-sm text-dandori-dark text-base font-bold rounded-full group-hover:bg-white group-hover:scale-105 transition-all shadow-lg">
+                                    View Details
+                                  </button>
+                                </div>
                               </div>
-                              
-                              <span className="inline-flex items-center justify-center px-4 py-2 bg-dandori-dark text-white text-sm rounded-full font-medium group-hover:bg-dandori-light transition-colors">
-                                View Details
-                              </span>
-                            </div>
-                          </div>
+                            </>
+                          ) : (
+                            /* LEAF SHAPE */
+                            <>
+                              <svg
+                                viewBox="0 0 300 400"
+                                className="w-full h-full drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300"
+                              >
+                                <defs>
+                                  <linearGradient id={`leafGradient-${course.ID}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stopColor="#8fbc8f" />
+                                    <stop offset="50%" stopColor="#7aa87a" />
+                                    <stop offset="100%" stopColor="#6b9b6b" />
+                                  </linearGradient>
+                                  <pattern id={`leafVeins-${course.ID}`} x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                                    <path d="M50,0 L50,100" stroke="rgba(90,120,90,0.15)" strokeWidth="2" fill="none" />
+                                    <path d="M50,20 Q70,20 80,30" stroke="rgba(90,120,90,0.1)" strokeWidth="1" fill="none" />
+                                    <path d="M50,40 Q70,40 80,50" stroke="rgba(90,120,90,0.1)" strokeWidth="1" fill="none" />
+                                    <path d="M50,60 Q70,60 80,70" stroke="rgba(90,120,90,0.1)" strokeWidth="1" fill="none" />
+                                    <path d="M50,20 Q30,20 20,30" stroke="rgba(90,120,90,0.1)" strokeWidth="1" fill="none" />
+                                    <path d="M50,40 Q30,40 20,50" stroke="rgba(90,120,90,0.1)" strokeWidth="1" fill="none" />
+                                    <path d="M50,60 Q30,60 20,70" stroke="rgba(90,120,90,0.1)" strokeWidth="1" fill="none" />
+                                  </pattern>
+                                </defs>
+                                
+                                {/* Leaf shape - taller to match acorn */}
+                                <path
+                                  d="M 150 40 
+                                     Q 210 80, 240 140
+                                     Q 260 200, 240 260
+                                     Q 210 320, 150 360
+                                     Q 90 320, 60 260
+                                     Q 40 200, 60 140
+                                     Q 90 80, 150 40 Z"
+                                  fill={`url(#leafGradient-${course.ID})`}
+                                  stroke="#5a7a5a"
+                                  strokeWidth="3"
+                                />
+                                
+                                {/* Leaf veins overlay */}
+                                <path
+                                  d="M 150 40 
+                                     Q 210 80, 240 140
+                                     Q 260 200, 240 260
+                                     Q 210 320, 150 360
+                                     Q 90 320, 60 260
+                                     Q 40 200, 60 140
+                                     Q 90 80, 150 40 Z"
+                                  fill={`url(#leafVeins-${course.ID})`}
+                                />
+                                
+                                {/* Center vein */}
+                                <path
+                                  d="M 150 40 Q 150 200, 150 360"
+                                  stroke="rgba(90,120,90,0.25)"
+                                  strokeWidth="4"
+                                  fill="none"
+                                />
+                                
+                                {/* Side veins */}
+                                <path d="M 150 100 Q 180 110, 200 130" stroke="rgba(90,120,90,0.15)" strokeWidth="2" fill="none" />
+                                <path d="M 150 100 Q 120 110, 100 130" stroke="rgba(90,120,90,0.15)" strokeWidth="2" fill="none" />
+                                <path d="M 150 160 Q 190 170, 210 190" stroke="rgba(90,120,90,0.15)" strokeWidth="2" fill="none" />
+                                <path d="M 150 160 Q 110 170, 90 190" stroke="rgba(90,120,90,0.15)" strokeWidth="2" fill="none" />
+                                <path d="M 150 220 Q 180 230, 200 250" stroke="rgba(90,120,90,0.15)" strokeWidth="2" fill="none" />
+                                <path d="M 150 220 Q 120 230, 100 250" stroke="rgba(90,120,90,0.15)" strokeWidth="2" fill="none" />
+                                <path d="M 150 280 Q 170 290, 180 310" stroke="rgba(90,120,90,0.15)" strokeWidth="2" fill="none" />
+                                <path d="M 150 280 Q 130 290, 120 310" stroke="rgba(90,120,90,0.15)" strokeWidth="2" fill="none" />
+                                
+                                {/* Highlight */}
+                                <ellipse cx="130" cy="140" rx="35" ry="60" fill="white" opacity="0.15" />
+                              </svg>
+                              <div className="absolute inset-0 flex flex-col justify-between p-5 pt-14 pb-4">
+                                <div>
+                                  <div className="flex justify-between items-start mb-2.5">
+                                    <span className="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/95 text-dandori-dark shadow-sm border border-dandori-dark/10">
+                                      {course['Course Type']}
+                                    </span>
+                                    <span className="font-mono text-xl font-bold text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]">
+                                      {course.Cost}
+                                    </span>
+                                  </div>
+                                  <h2 className="text-xl font-serif font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] mb-2 leading-tight group-hover:scale-105 transition-transform">
+                                    {course['Course Name']}
+                                  </h2>
+                                  <div className="flex items-center text-white/95 text-sm mb-2.5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                                    <User className="w-4 h-4 mr-1.5" />
+                                    <span className="font-medium">{course.Instructor}</span>
+                                  </div>
+                                  <div className="flex flex-wrap gap-2 mb-2.5">
+                                    {course['Skills Developed'].split(',').slice(0, 2).map((skill, i) => (
+                                      <span key={i} className="text-[10px] px-2.5 py-1 bg-white/95 text-dandori-dark rounded-full font-medium shadow-sm">
+                                        {skill.trim()}
+                                      </span>
+                                    ))}
+                                    {course['Skills Developed'].split(',').length > 2 && (
+                                      <span className="text-[10px] px-2.5 py-1 bg-white/75 text-dandori-dark rounded-full font-medium">
+                                        +{course['Skills Developed'].split(',').length - 2}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-white/90 text-sm line-clamp-5 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                                    {course.Description}
+                                  </p>
+                                </div>
+                                <div className="space-y-2.5 mt-3">
+                                  <div className="flex items-center text-white/90 text-sm drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                                    <MapPin className="w-4 h-4 mr-1.5" />
+                                    {course.Location}
+                                  </div>
+                                  <button className="w-full py-3 bg-white/95 backdrop-blur-sm text-dandori-dark text-base font-bold rounded-full group-hover:bg-white group-hover:scale-105 transition-all shadow-lg">
+                                    View Details
+                                  </button>
+                                </div>
+                              </div>
+                            </>
+                          )}
                         </motion.div>
                       ))}
                     </AnimatePresence>

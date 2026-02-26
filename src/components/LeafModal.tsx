@@ -73,7 +73,7 @@ export default function LeafModal({ course, isOpen, onClose, onBook, bookingClic
                 fill={`url(#woodGradient-${course.ID})`}
               />
 
-              {/* Tree rings - reduced to 6 rings */}
+              {/* Tree rings - 6 rings with varied thickness */}
               {[400, 320, 240, 160, 100, 60].map((r, i) => (
                 <circle
                   key={i}
@@ -81,71 +81,202 @@ export default function LeafModal({ course, isOpen, onClose, onBook, bookingClic
                   cy="500"
                   r={r}
                   fill="none"
-                  stroke={i % 2 === 0 ? 'rgba(90,70,50,0.25)' : 'rgba(90,70,50,0.12)'}
-                  strokeWidth={i % 2 === 0 ? '2' : '1'}
+                  stroke={i % 2 === 0 ? 'rgba(90,70,50,0.3)' : 'rgba(90,70,50,0.15)'}
+                  strokeWidth={i % 2 === 0 ? '3' : '1.5'}
                 />
               ))}
 
-              {/* Center knot/heart */}
+              {/* Additional detail rings between main rings */}
+              {[360, 280, 200, 130, 80].map((r, i) => (
+                <circle
+                  key={`detail-${i}`}
+                  cx="500"
+                  cy="500"
+                  r={r}
+                  fill="none"
+                  stroke="rgba(90,70,50,0.08)"
+                  strokeWidth="1"
+                />
+              ))}
+
+              {/* Center knot/heart with more detail */}
               <circle
                 cx="500"
                 cy="500"
-                r="40"
+                r="45"
                 fill="#6a5a4a"
+                opacity="0.4"
+              />
+              <circle
+                cx="500"
+                cy="500"
+                r="30"
+                fill="#5a4a3a"
                 opacity="0.5"
               />
+              <circle
+                cx="500"
+                cy="500"
+                r="15"
+                fill="#4a3a2a"
+                opacity="0.6"
+              />
 
-              {/* Cracks in the wood */}
+              {/* Cracks in the wood - more detailed */}
               <path
                 d="M500,40 Q505,200 500,360"
-                stroke="rgba(90,70,50,0.3)"
-                strokeWidth="2"
+                stroke="rgba(90,70,50,0.35)"
+                strokeWidth="2.5"
                 fill="none"
               />
               <path
                 d="M500,640 Q495,800 500,960"
-                stroke="rgba(90,70,50,0.3)"
+                stroke="rgba(90,70,50,0.35)"
+                strokeWidth="2.5"
+                fill="none"
+              />
+              <path
+                d="M40,500 Q200,495 360,500"
+                stroke="rgba(90,70,50,0.25)"
+                strokeWidth="2"
+                fill="none"
+              />
+              <path
+                d="M640,500 Q800,505 960,500"
+                stroke="rgba(90,70,50,0.25)"
                 strokeWidth="2"
                 fill="none"
               />
 
-              {/* Animated Ladybug - simplified */}
+              {/* Wood grain texture lines */}
+              <path
+                d="M300,100 Q350,150 400,100 T500,100"
+                stroke="rgba(90,70,50,0.1)"
+                strokeWidth="1"
+                fill="none"
+              />
+              <path
+                d="M600,200 Q650,250 700,200 T800,200"
+                stroke="rgba(90,70,50,0.1)"
+                strokeWidth="1"
+                fill="none"
+              />
+              <path
+                d="M200,700 Q250,750 300,700 T400,700"
+                stroke="rgba(90,70,50,0.1)"
+                strokeWidth="1"
+                fill="none"
+              />
+
+              {/* Animated Ladybug - stays on outer ring */}
               <g>
                 <circle cx="0" cy="0" r="10" fill="#e74c3c">
                   <animateMotion
                     dur="30s"
                     repeatCount="indefinite"
-                    path="M500,60 A440,440 0 1,1 499,60"
+                    path="M500,80 A420,420 0 1,1 499,80"
                   />
                 </circle>
                 <circle cx="0" cy="-3" r="4" fill="black">
                   <animateMotion
                     dur="30s"
                     repeatCount="indefinite"
-                    path="M500,60 A440,440 0 1,1 499,60"
+                    path="M500,80 A420,420 0 1,1 499,80"
+                  />
+                </circle>
+                <circle cx="-2" cy="-2" r="1.5" fill="black">
+                  <animateMotion
+                    dur="30s"
+                    repeatCount="indefinite"
+                    path="M500,80 A420,420 0 1,1 499,80"
+                  />
+                </circle>
+                <circle cx="2" cy="-2" r="1.5" fill="black">
+                  <animateMotion
+                    dur="30s"
+                    repeatCount="indefinite"
+                    path="M500,80 A420,420 0 1,1 499,80"
                   />
                 </circle>
               </g>
 
-              {/* Animated Ant - simplified */}
+              {/* Animated Ant - middle ring */}
               <g>
                 <ellipse cx="0" cy="0" rx="7" ry="5" fill="#2c3e50">
                   <animateMotion
                     dur="20s"
                     repeatCount="indefinite"
-                    path="M500,200 A300,300 0 1,0 499,200"
+                    path="M500,220 A280,280 0 1,0 499,220"
                   />
                 </ellipse>
+                <circle cx="0" cy="-2" r="3" fill="#2c3e50">
+                  <animateMotion
+                    dur="20s"
+                    repeatCount="indefinite"
+                    path="M500,220 A280,280 0 1,0 499,220"
+                  />
+                </circle>
               </g>
 
-              {/* Animated Beetle - simplified */}
+              {/* Animated Beetle - inner ring */}
               <g>
                 <ellipse cx="0" cy="0" rx="8" ry="6" fill="#654321">
                   <animateMotion
                     dur="25s"
                     repeatCount="indefinite"
-                    path="M500,360 A140,140 0 1,1 499,360"
+                    path="M500,340 A160,160 0 1,1 499,340"
                   />
+                </ellipse>
+                <circle cx="-2" cy="-1" r="1.5" fill="#8b6914">
+                  <animateMotion
+                    dur="25s"
+                    repeatCount="indefinite"
+                    path="M500,340 A160,160 0 1,1 499,340"
+                  />
+                </circle>
+              </g>
+
+              {/* Flying Bee - random figure-8 pattern around center */}
+              <g>
+                {/* Bee body */}
+                <ellipse cx="0" cy="0" rx="8" ry="6" fill="#f4a300">
+                  <animateMotion
+                    dur="18s"
+                    repeatCount="indefinite"
+                    path="M500,300 Q600,400 500,500 Q400,400 500,300 Q600,200 500,100 Q400,200 500,300"
+                  />
+                </ellipse>
+                {/* Black stripes */}
+                <line x1="-3" y1="-4" x2="-3" y2="4" stroke="black" strokeWidth="2">
+                  <animateMotion
+                    dur="18s"
+                    repeatCount="indefinite"
+                    path="M500,300 Q600,400 500,500 Q400,400 500,300 Q600,200 500,100 Q400,200 500,300"
+                  />
+                </line>
+                <line x1="3" y1="-4" x2="3" y2="4" stroke="black" strokeWidth="2">
+                  <animateMotion
+                    dur="18s"
+                    repeatCount="indefinite"
+                    path="M500,300 Q600,400 500,500 Q400,400 500,300 Q600,200 500,100 Q400,200 500,300"
+                  />
+                </line>
+                {/* Wings */}
+                <ellipse cx="-4" cy="-3" rx="5" ry="3" fill="white" opacity="0.7">
+                  <animateMotion
+                    dur="18s"
+                    repeatCount="indefinite"
+                    path="M500,300 Q600,400 500,500 Q400,400 500,300 Q600,200 500,100 Q400,200 500,300"
+                  />
+                  <animate attributeName="ry" values="3;4;3" dur="0.2s" repeatCount="indefinite" />
+                </ellipse>
+                <ellipse cx="4" cy="-3" rx="5" ry="3" fill="white" opacity="0.7">
+                  <animateMotion
+                    dur="18s"
+                    repeatCount="indefinite"
+                    path="M500,300 Q600,400 500,500 Q400,400 500,300 Q600,200 500,100 Q400,200 500,300"
+                  />
+                  <animate attributeName="ry" values="3;4;3" dur="0.2s" repeatCount="indefinite" />
                 </ellipse>
               </g>
             </svg>
