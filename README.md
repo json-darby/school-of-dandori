@@ -61,7 +61,7 @@ A whimsical course discovery platform with AI-powered chat assistance.
 
 On first run, the backend will:
 - Load course data from `courses.csv`
-- Generate embeddings using OpenAI
+- Generate embeddings using ~~OpenAI~~ Mistral
 - Store vectors in ChromaDB (persisted in `backend/chroma_db/`)
 
 Subsequent runs are much faster as embeddings are cached.
@@ -97,7 +97,7 @@ Subsequent runs are much faster as embeddings are cached.
 **Backend:**
 - Flask
 - ChromaDB (vector database)
-- OpenAI API (embeddings + chat)
+- ~~OpenAI~~ Mistral API (embeddings + chat)
 - Pandas
 
 ## Deployment
