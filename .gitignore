@@ -1,0 +1,42 @@
+# Node.js dependencies
+node_modules/
+
+# Production builds
+build/
+dist/
+coverage/
+
+# Operating system files
+.DS_Store
+*.log
+
+# Environment configuration files
+.env*
+!.env.example
+
+# Python virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python compiled caches and system files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Vector database and local RAG system caches
+backend/chroma_db/
+backend/rag_system.pkl
+
+# Agent artifacts, task trackers, and IDE folders
+walkthrough.md
+task.md
+implementation_plan.md
+.gemini/
+.brain/
+

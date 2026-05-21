@@ -1,0 +1,28 @@
+services:
+  dandori-backend:
+    container_name: dandori-backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./courses.csv:/app/courses.csv:ro
+      - chroma_data:/app/chroma_db
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  dandori-frontend:
+    container_name: dandori-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - dandori-backend
+    restart: unless-stopped
+
+volumes:
+  chroma_data:
