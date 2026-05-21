@@ -1,7 +1,8 @@
-"""Retrieval-augmented generation (RAG) system utilising OpenAI embeddings for School of Dandori course query matching."""
+"""Retrieval-augmented generation (RAG) system utilising Mistral embeddings for School of Dandori course query matching."""
 
 import csv
 import os
+import time
 from typing import List
 
 from mistralai import Mistral
@@ -23,7 +24,6 @@ class MistralEmbeddingFunction(EmbeddingFunction):
     
     def __call__(self, input: Documents) -> Embeddings:
         """Generates embeddings for the provided documents utilising the Mistral API."""
-        import time
         embeddings = []
         for text in input:
             success = False
@@ -198,6 +198,7 @@ class DandoriRAG:
         {message}
         """
 
+        time.sleep(1)  # Delay to avoid Mistral API rate limits after the embedding query.
         response = chat_client.chat.complete(
             model="mistral-large-latest",
             messages=[
