@@ -30,7 +30,6 @@ __pycache__/
 .ipynb_checkpoints/
 
 # Vector database and local RAG system caches
-backend/chroma_db/
 backend/rag_system.pkl
 
 # Agent artifacts, task trackers, and IDE folders
