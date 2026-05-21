@@ -55,3 +55,6 @@ steps:
 images:
   - 'gcr.io/$PROJECT_ID/dandori-backend:latest'
   - 'gcr.io/$PROJECT_ID/dandori-frontend:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
