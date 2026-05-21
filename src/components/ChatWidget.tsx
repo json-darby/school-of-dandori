@@ -48,7 +48,7 @@ export default function ChatWidget() {
     
     try {
       const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 
-        (import.meta.env.DEV ? 'http://localhost:3001' : 'https://school-of-dandori-980659832082.europe-west2.run.app');
+        (import.meta.env.DEV ? 'http://localhost:3001' : 'https://dandori-backend-274788224867.europe-west2.run.app');
 
       const response = await fetch(`${BACKEND_URL}/chat`, {
         method: 'POST',
